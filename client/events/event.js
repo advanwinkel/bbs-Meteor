@@ -2,7 +2,7 @@
 Template.event.onRendered(function() {
   var template = this
   //Vue.use(window['vue-validator'])
-  Vue.config.debug = true;
+  //Vue.config.debug = true;
   var vm = new Vue({
     el: '#events',
     data: {
@@ -17,16 +17,13 @@ Template.event.onRendered(function() {
         console.log( "add event: " + e);
         e.preventDefault();
         if (this.event.name) {
-          Meteor.call('addEvent', this.event, function(err, result){
-            this.event.id = result;
-            //this.events.push(this.event);
-          });
+          Meteor.call('addEvent', this.event);
           this.event = { name: '', description: '', date: '' };
         }
       },
       deleteEvent: function (index) {
-        console.log(vm.events[index].id);
-        Meteor.call('removeEvent', vm.events[index]._id)
+        console.log(this.events[index]._id);
+        Meteor.call('removeEvent', this.events[index]._id)
       },
       loadMore: function() {
         template.limit.set(template.limit.get() + 5)
